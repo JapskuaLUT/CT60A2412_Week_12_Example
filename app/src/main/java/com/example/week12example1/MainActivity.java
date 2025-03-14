@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 modifyTeam();
                 updateUI();
+                Toast.makeText(MainActivity.this, "Added a win to original team!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,6 +107,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 modifyPlayer();
                 updateUI();
+
+                // Get the first player's name for the toast message
+                if (originalTeam != null && !originalTeam.getPlayers().isEmpty()) {
+                    Player player = originalTeam.getPlayers().get(0);
+                    Toast.makeText(MainActivity.this, "Added a goal to " + player.getName() + "!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -204,8 +211,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Modify the original team - this will affect reference copies
         originalTeam.setWins(originalTeam.getWins() + 1);
-
-        Toast.makeText(this, "Added a win to original team!", Toast.LENGTH_SHORT).show();
     }
 
     private void modifyPlayer() {
@@ -218,8 +223,6 @@ public class MainActivity extends AppCompatActivity {
         // This will affect shallow copies as well as reference copies
         Player player = originalTeam.getPlayers().get(0);
         player.setGoals(player.getGoals() + 1);
-
-        Toast.makeText(this, "Added a goal to " + player.getName() + "!", Toast.LENGTH_SHORT).show();
     }
 
     private void updateUI() {
